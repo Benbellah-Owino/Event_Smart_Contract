@@ -32,7 +32,13 @@ contract EventsGroup10{
     enum TicketStatus{
         VALID,
         USED,
-        INVALIDATED
+        RETURNED
+    }
+
+    enum TransactionStatus{
+        PENDING,
+        SUCCESS,
+        FAILED
     }
 
     //Array definitions
@@ -120,10 +126,40 @@ contract EventsGroup10{
 
         tickets[msg.sender].push(new_ticket);
 
-        
-
         return new_ticket;
+    }
 
+    modifier isORGANIZER(address _organizer){
+        require(msg.sender == _organizer, "Ticket authentication rejected");
+        _;
+    }
+
+
+
+    function confirmTicket(address _organizer, address _customer, uint _contract_id, uint _price) public payable isORGANIZER(_organizer) returns (TransactionStatus){
+        
+        if(tickets[_customer][_contract_id].status == TicketStatus.VALID ){
+              (bool success,) = _organizer.call{value: _price}("");
+            if(success == true){
+                tickets[_customer][_contract_id].status = TicketStatus.USED;
+            return TransactionStatus.SUCCESS;
+            }
+            
+        }
+
+        return TransactionStatus.FAILED;
+    }
+
+    function returnTicket(address _organizer, address _customer, uint _contract_id, uint _price) public payable isORGANIZER(_organizer) returns (TransactionStatus){
+        if(tickets[_customer][_contract_id].status == TicketStatus.VALID ){
+            (bool success,) = _customer.call{value: _price}("");
+            if(success == true){
+                tickets[_customer][_contract_id].status = TicketStatus.RETURNED;
+                return TransactionStatus.SUCCESS;
+            }
+        }
+
+         return TransactionStatus.FAILED;
     }
 
 }
