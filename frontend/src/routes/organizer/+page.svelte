@@ -1,5 +1,5 @@
-<script lang "ts">
-	import Organizer from '$lib/user_components/organizer.svelte';
+<script lang="ts">
+	import Organizer from '$lib/UI_components/user_components/organizer.svelte';
 </script>
 
 <main>

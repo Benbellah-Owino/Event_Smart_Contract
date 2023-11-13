@@ -81,8 +81,6 @@ contract EventsGroup10{
         new_event.timecreated = block.timestamp;
 
         events[msg.sender].push(new_event);
-      
-
         return new_event;
     }
 
@@ -139,13 +137,14 @@ contract EventsGroup10{
     function confirmTicket(address _organizer, address _customer, uint _contract_id, uint _price) public payable isORGANIZER(_organizer) returns (TransactionStatus){
         
         if(tickets[_customer][_contract_id].status == TicketStatus.VALID ){
-              (bool success,) = _organizer.call{value: _price}("");
+            (bool success,) = _organizer.call{value: _price}("");
             if(success == true){
                 tickets[_customer][_contract_id].status = TicketStatus.USED;
             return TransactionStatus.SUCCESS;
             }
             
         }
+        //todo: Return money to ticket holder if  failed 
 
         return TransactionStatus.FAILED;
     }
@@ -159,7 +158,7 @@ contract EventsGroup10{
             }
         }
 
-         return TransactionStatus.FAILED;
+        return TransactionStatus.FAILED;
     }
 
 }

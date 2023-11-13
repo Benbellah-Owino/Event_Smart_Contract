@@ -13,3 +13,11 @@
 		id="follow_button ">follow</button
 	>
 </article>
+
+<style>
+	@media only screen and (max-width: 380px) {
+		article {
+			width: 290px;
+		}
+	}
+</style>

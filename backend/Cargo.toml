@@ -32,6 +32,7 @@ time = "0.3"
 lazy-regex = "3"
 async-trait = "0.1"
 strum_macros = "0.25"
+surrealdb = "1.0.0"
 
 
 [dev-dependencies]
