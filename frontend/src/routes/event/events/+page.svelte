@@ -2,7 +2,10 @@
 	import Navbar from '$lib/UI_components/major_components/navbar.svelte';
 	import EventTile from '$lib/UI_components/events_components/event_tile.svelte';
 	import { onMount } from 'svelte';
-	import { events } from '$lib/stores/event';
+	import { events, event_details_on, curr_event } from '$lib/stores/event';
+	import EventDetails from '$lib/UI_components/events_components/event_details.svelte';
+
+	let event: Event;
 	onMount(async () => {
 		await fetch(`http://192.168.100.11:3000/api/v1/event/get_all `, {
 			credentials: 'include',
@@ -13,7 +16,7 @@
 			.then((response) => response.json())
 			.then((data) => {
 				$events = data.events;
-				console.log($events)
+				console.log($events);
 			});
 	});
 </script>
@@ -27,6 +30,10 @@
 			<EventTile {event} />
 		{/each}
 	</div>
+
+	{#if $event_details_on == true}
+		<EventDetails event={$curr_event} />
+	{/if}
 </div>
 
 <style>

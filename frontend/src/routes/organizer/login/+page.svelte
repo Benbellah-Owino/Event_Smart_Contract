@@ -14,7 +14,7 @@
 		console.log(user);
 
 		try {
-			await fetch(`http://192.168.100.11:3000/api/v1/user/login`, {
+			await fetch(`http://192.168.100.11:3000/api/v1/organizer/login`, {
 				method: 'POST',
 				mode: 'cors',
 				credentials: 'include',

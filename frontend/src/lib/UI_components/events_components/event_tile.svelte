@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Event } from '$lib/interfaces/event';
+	import { curr_event, event_details_on } from '$lib/stores/event';
 	export let event: Event;
 
 	let price: number;
@@ -15,6 +16,11 @@
 	})} ${opening_iso.getDay()} ${opening_iso.toLocaleDateString('en-US', {
 		month: 'long'
 	})} ${opening_iso.getFullYear()}`;
+
+	function clickLearnMore() {
+		$event_details_on = true;
+		$curr_event = event;
+	}
 </script>
 
 <main
@@ -22,7 +28,7 @@
 	id="event_tile "
 >
 	<div class="logo h-16 md:h-32 rounded-t-lg bg-blue-200" id="log">H</div>
-	<h1 class="event_title ml-2 mb-3 font-bold text-lg" id="event_title">
+	<h1 class="event_title ml-2 mb-2 font-bold text-lg" id="event_title">
 		{event.name}
 	</h1>
 	<div class="more_info w-full flex justify-between row text-sm" id="more_info">
@@ -30,13 +36,14 @@
 		<h3 class="price w-1/3" id="id"><b>price: </b>{price}</h3>
 	</div>
 	<h3 class="date_time ml-2 mt-2 text-sm" id="data_time">{opening} {event.hour_range.arrival}</h3>
-	<div class="footer h-7 rounded-lg bg-red-50">
+	<div class="footer pr-1 pl-1 flex flex-row justify-between items-center h-8 rounded-lg bg-red-50">
 		<h3 class="tickets_remaining ml-2 mt-2 text-sm" id="tickets_remaining">
-			{event.tickets_quantity - event.tickets_sold}
+			<b>Tickets remaining:</b>{event.tickets_quantity - event.tickets_sold}
 		</h3>
 		<button
 			class="learn_more w-30 border border-black rounded-lg bg-yellow-300 text-xs md:text-sm md:font-bold duration-300 hover:bg-black hover:text-yellow-300 hover:shadow-lg hover:shadow-yellow-300"
-			id="learn_more">LEARN MORE</button
+			id="learn_more"
+			on:click={clickLearnMore}>LEARN MORE</button
 		>
 	</div>
 </main>

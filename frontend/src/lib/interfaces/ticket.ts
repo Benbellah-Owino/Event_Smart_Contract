@@ -24,3 +24,12 @@ export interface Ticket {
 	type: string;
 	user: TicketUser;
 }
+
+export interface NewTicket {
+	[key: string]: string | number | Date | TicketEvent | TicketUser;
+	code: string;
+	event: TicketEvent;
+	price: number | string;
+	status: string;
+	type: string;
+}
